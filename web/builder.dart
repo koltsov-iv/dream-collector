@@ -1,9 +1,9 @@
 import 'dart:html';
 import 'dart:math';
 import 'env.dart';
-import 'repository.dart';
 import 'statement.dart';
 import 'statementScore.dart';
+import 'test/mock_repository.dart';
 
 class JarBuilder {
   late Iterable<Statement> statementsList;
@@ -19,7 +19,7 @@ class JarBuilder {
     var content = querySelector('#output');
     content?.innerHtml = "";
     content?.append(jar);
-    MonoRepository().fetchStatements().then((value) => {
+    MockRepo().fetchStatements().then((value) => {
           statementsList = value,
           covertData(),
           textInJar.children.addAll(statementMap.values.map(newLI))
@@ -45,19 +45,25 @@ class JarBuilder {
   }
 
   LIElement newLI(StatementScored one) {
+    // isMobileView duplicates with main file, be careful
     bool isMobileView = window.innerWidth?.compareTo(768) == -1;
+    // different max font size depends device
     int maxSize = isMobileView ? 24 : 48;
     var link = AnchorElement();
-    link.href =
-        "https://send.monobank.ua/jar/$jarPath?&t=${one.statement.comment}";
+    link.href = "https://send.monobank.ua/jar/$jarPath?&t=${one.statement.comment}";
     link.text = one.statement.comment;
+    // dynamic font size that's depends on supportedCnt
     var fontSize = min(maxSize, 12 + (3 * one.supportedCnt) - 3);
     link.style.fontSize = "${fontSize}px";
     link.target = "_blank";
+    // tooltips styles didn't set up yet
     link.classes.add("tooltip");
-
+    // don't remember why we need this hardcode
     link.style.left = "200px";
     var liElem = LIElement();
+    // the requirement is to avoid text structure and place the text in the random position
+    // in the jar, in order to achieve some chaos of the "dreams"
+    // this is fast solution, maybe we can improve it
     var r = Random().nextInt(3);
     liElem.style.textAlign = r == 0
         ? "left"

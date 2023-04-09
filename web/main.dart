@@ -6,7 +6,6 @@ import 'builder.dart';
 void main() {
   List<Element> exampleButtons = document.querySelectorAll('.jar-button');
   switchMobile();
-  print(exampleButtons);
   for (var jarButton in exampleButtons) {
     jarButton.onClick.listen((event) {
       JarBuilder().build();

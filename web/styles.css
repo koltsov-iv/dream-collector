@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@1,600&display=swap');
-
+/*
+     As a fast solution the project don't have any css frameworks and all styles are hardcoded :(
+     As we need to design for different sizes - I believe we need to find more convenient solution.
+     This ugly approach to have a 2 blocks with duplicated structure and classes was chosen to create a fast decision
+     With this design is quite a complicated to work with style and logic, need to duplicate them as well.
+     Maybe we can make a fast refactoring.
+*/
 html, body {
   width: 100%;
   height: 100%;
