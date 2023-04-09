@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:math';
 import 'env.dart';
+import 'repository.dart';
 import 'statement.dart';
 import 'statementScore.dart';
 import 'test/mock_repository.dart';
@@ -19,7 +20,7 @@ class JarBuilder {
     var content = querySelector('#output');
     content?.innerHtml = "";
     content?.append(jar);
-    MockRepo().fetchStatements().then((value) => {
+    MonoRepository().fetchStatements().then((value) => {
           statementsList = value,
           covertData(),
           textInJar.children.addAll(statementMap.values.map(newLI))
